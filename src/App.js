@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Header from './component/Header';
 import TaskList from './component/Tasklist';
 import TaskForm from './component/TaskForm';  
@@ -11,20 +11,20 @@ function App() {
   const [currentTask, setCurrentTask] = useState(null);
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
-  const fetchTasks = async () => {
+  const showSnackbar = (message, severity) => {
+    setSnackbar({ open: true, message, severity });
+  };
+
+  const fetchTasks = useCallback(async () => {
     try {
       const res = await getTasks();
       setTasks(res.data);
     } catch {
       showSnackbar('Failed to fetch tasks', 'error');
     }
-  };
+  }, [showSnackbar]);
 
-  useEffect(() => { fetchTasks(); }, []);
-
-  const showSnackbar = (message, severity) => {
-    setSnackbar({ open: true, message, severity });
-  };
+  useEffect(() => { fetchTasks(); }, [fetchTasks]);
 
   const handleAddClick = () => {
     setCurrentTask(null);
