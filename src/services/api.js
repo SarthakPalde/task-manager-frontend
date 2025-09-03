@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = 'http://localhost:5000'; // Change for your backend
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 export const getTasks = () => axios.get(`${BASE_URL}/tasks`);
 export const addTask = (task) => axios.post(`${BASE_URL}/tasks`, task);
