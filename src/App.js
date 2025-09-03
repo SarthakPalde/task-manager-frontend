@@ -11,9 +11,9 @@ function App() {
   const [currentTask, setCurrentTask] = useState(null);
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
-  const showSnackbar = (message, severity) => {
+  const showSnackbar = useCallback((message, severity) => {
     setSnackbar({ open: true, message, severity });
-  };
+  }, []);
 
   const fetchTasks = useCallback(async () => {
     try {
